@@ -1,11 +1,11 @@
 '''
 Created on Jun 3, 2015
 
+    Simple socket server using threads
+
 @author: cristopher
 '''
-'''
-    Simple socket server using threads
-'''
+
  
 import socket
 import sys
