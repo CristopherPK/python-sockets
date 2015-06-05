@@ -14,3 +14,19 @@ print client1.toString()
 client1.deposit(100)
 
 print client1.toString()
+
+value = client1.withdraw(50)
+
+print value
+
+print client1.toString()
+
+client2 = manager.createAccount(2341, 'Joao da Vida')
+
+print client2.toString()
+
+client1.transfer((manager.lookForClientByID(2341)),50)
+
+print client1.genReport()
+print client2.genReport()
+

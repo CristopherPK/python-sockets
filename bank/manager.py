@@ -3,7 +3,7 @@ Created on Jun 4, 2015
 
 @author: cristopher
 '''
-from bank.client import Client, Account, Transaction
+from bank.client import Client, Account
 
 class Manager(object):
 
