@@ -13,13 +13,17 @@ class Transaction(object):
         self._src = src
         self._dst = dst
         self._op = op
-        
-    def toString(self):
+
+    def __getstate__(self): return self.__dict__
+
+    def __setstate__(self, d): self.__dict__.update(d)
+
+    def toDict(self):
         return {'time': self._time,
                 'value': self._value,
                 'src': self._src,
                 'dst': self._dst,
-                'op': self._op}        
+                'op': self._op}
 
 class Account(object):
     
@@ -51,7 +55,7 @@ class Client(object):
     def __init__(self, name, account):
         self._name = name
         self._account = account
-        
+
     @property
     def name(self):
         return self._name        
@@ -64,11 +68,11 @@ class Client(object):
     def balance(self):
         return self._account.balance
     
-    def toString(self):
+    def toDict(self):
         return {'name': self.name,
                 'balance': self.balance,
                 'id': self.id}
-        
+
     def withdraw(self, value):
         self._account.setBalance(self.balance - value)
         t = Transaction(datetime.now().time(), value, self._account.id, None, "withdraw")
@@ -86,10 +90,13 @@ class Client(object):
         t = Transaction(datetime.now().time(), value, self._account.id, dst.id, "transfer")
         self._account.newTransaction(t)
         dst._account.newTransaction(t)
-        
-        
+
     def genReport(self):
         report = list()
         for t in self._account.transactions:
-            report.append(t.toString())
+            report.append(t.toDict())
         return report
+
+    def __getstate__(self): return self.__dict__
+
+    def __setstate__(self, d): self.__dict__.update(d)
