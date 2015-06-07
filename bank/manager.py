@@ -23,15 +23,11 @@ class Manager(object):
         for c in self._clients:
             if c.id == id:
                 return c
-            else:
-                return None
         
     def lookForClientByName(self, name):
         for c in self._clients:
             if c.name == name:
                 return c
-            else:
-                return None
 
     def removeClient(self, name):
         c = self.lookForClientByName(name)

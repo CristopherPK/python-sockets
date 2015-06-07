@@ -43,3 +43,7 @@ manager = Manager()
 manager.load()
 
 manager.listClients()
+
+client = manager.lookForClientByID(1234)
+
+print client.toDict()

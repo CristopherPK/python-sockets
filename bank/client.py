@@ -74,6 +74,10 @@ class Client(object):
                 'id': self.id}
 
     def withdraw(self, value):
+        if self.balance <= 0:
+            return 'Funds insufficient'
+            self._account.setBalance(0)
+
         self._account.setBalance(self.balance - value)
         t = Transaction(datetime.now().time(), value, self._account.id, None, "withdraw")
         self._account.newTransaction(t)
