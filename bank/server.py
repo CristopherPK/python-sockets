@@ -18,6 +18,7 @@ s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 print 'Socket created.'
 
 manager = Manager()
+#TODO: Restricting unauthorized access.
 manager.load()
 manager.listClients()
 print 'Bank connected.'
@@ -89,6 +90,7 @@ def clientThread(conn):
             continue
 
     #came out of loop
+    manager.save()
     conn.close()
 
 #Start listening on socket
