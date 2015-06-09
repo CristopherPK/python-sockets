@@ -49,38 +49,3 @@ class Manager(object):
 
     def load(self):
         self._clients = self._persistence.load()
-
-    def ui(self):
-
-        while True:
-            print "------------------\n" \
-            "1 - Add Client\n" \
-            "2 - List Clients\n" \
-            "3 - Remove Client\n" \
-            "4 - Reports\n" \
-            "0 - Exit\n" \
-            "------------------\n"
-
-            x = int(input("Please enter an option: "))
-
-            if x == 1:
-                id = int(raw_input("Please enter an ID: "))
-                name = str(raw_input("Please enter a name: "))
-                c = self.createAccount(id, name)
-                print "Account created."
-                self.save()
-            elif x == 2:
-                self.listClients()
-            elif x == 3:
-                id = int(raw_input("Please enter an ID: "))
-                self.removeClient(id)
-                self.save()
-            elif x == 4:
-                self.genReport()
-            else:
-                break
-
-if __name__ == '__main__':
-    m = Manager()
-    m.load()
-    m.ui()

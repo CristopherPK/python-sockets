@@ -24,7 +24,7 @@ manager.listClients()
 print 'Bank connected.'
 
 
-#Bind socket to local host ande port
+#Bind socket to local host and port
 try:
     s.bind((HOST, PORT))
 except socket.error as msg:
