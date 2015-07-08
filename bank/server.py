@@ -12,7 +12,7 @@ from thread import *
 from bank.manager import Manager
 
 HOST = 'localhost'
-PORT = 8888
+PORT = 8889
  
 s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 print 'Socket created.'
@@ -36,20 +36,26 @@ print 'Socket bind complete'
 #Function for handling connections. This will be used to create threads
 def clientThread(conn):
     #Sending message to connected client
-    conn.send('Welcome to the bank server. Type your account ID\n') #send only takes string
+    conn.send('Welcome to the bank server. Type your account ID and your password\n') #send only takes string
 
     #infinite loop so that function do not terminate and thread do not end.
     while True:
         #Listen to the operations from the user
         #Receiving from client
         data = conn.recv(1024)
+        id = int(data[:4])
+        print id
+        password = str(data[5:len(data)-1])
+        print password
+        print len(password)
+        password = password[:len(password)-1]
 
         if not data or data is '.':
             conn.send('Quiting...\n')
             break
 
         #Getting client by ID
-        client = manager.lookForClientByID(int(data))
+        client = manager.connectAccount(id,password)
 
         print client
 

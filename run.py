@@ -8,10 +8,9 @@ from datetime import datetime
 
 from bank.manager import Manager
 
-'''
 manager = Manager()
 
-client1 = manager.createAccount(1234, 'Jose Maria')
+client1 = manager.createAccount(1234, 'Jose Maria', 'senha')
 
 print client1
 
@@ -25,7 +24,7 @@ print value
 
 print client1
 
-client2 = manager.createAccount(2341, 'Joao da Vida')
+client2 = manager.createAccount(2341, 'Joao da Vida', 'teste')
 
 print client2
 
@@ -35,15 +34,3 @@ print client1.genReport()
 print client2.genReport()
 
 manager.save()
-
-'''
-
-manager = Manager()
-
-manager.load()
-
-manager.listClients()
-
-client = manager.lookForClientByID(1234)
-
-print client.toDict()

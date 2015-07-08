@@ -4,6 +4,7 @@ Created on May 28, 2015
 @author: cristopher
 '''
 from datetime import datetime
+from OpenSSL import rand
 
 class Transaction(object):
     
@@ -51,10 +52,10 @@ class Account(object):
         self._transactions.append(transaction)
 
 class Client(object):
-
-    def __init__(self, name, account):
+    def __init__(self, name, account, password):
         self._name = name
         self._account = account
+        self._password = password
 
     @property
     def name(self):
@@ -63,7 +64,11 @@ class Client(object):
     @property
     def id(self):
         return self._account.id
-    
+
+    @property
+    def password(self):
+        return self._password
+
     @property            
     def balance(self):
         return self._account.balance
