@@ -12,7 +12,7 @@ from thread import *
 from bank.manager import Manager
 
 HOST = 'localhost'
-PORT = 8889
+PORT = 8888
  
 s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 print 'Socket created.'
@@ -43,16 +43,19 @@ def clientThread(conn):
         #Listen to the operations from the user
         #Receiving from client
         data = conn.recv(1024)
+
+        if not data or data[0] is '.':
+            print 'Closing connection'
+            conn.send('Quiting...\n')
+            client = None
+            break
+
         id = int(data[:4])
         print id
         password = str(data[5:len(data)-1])
         print password
         print len(password)
         password = password[:len(password)-1]
-
-        if not data or data is '.':
-            conn.send('Quiting...\n')
-            break
 
         #Getting client by ID
         client = manager.connectAccount(id,password)
@@ -69,29 +72,36 @@ def clientThread(conn):
             break
 
     #Infinite loop to capture client operations.
-    while client is not None:
+    while True:
+        if client is None:
+            print 'Closing connection'
+            conn.send('Quiting...\n')
+            break
+
         data = conn.recv(1024)
 
         if 'PUT' == data[0:3]:
             id = int(data[4:8])
             value = int(data[9:])
             if client.id == id:
-                client.deposit(value)
+                conn.send(client.deposit(value) + '\n')
             else:
-                client.transfer(manager.lookForClientByID(id), value)
-            conn.send('OK\n')
+                conn.send(client.transfer(manager.lookForClientByID(id), value) + '\n')
 
         elif 'TAKE' in data[0:4]:
             value = int(data[5:])
             v = client.withdraw(value)
             conn.send(str(v) + '\n')
 
-        elif data == '.':
+        elif 'CHECK' in data:
+            conn.send(str(client.balance) + '\n')
+
+        elif data[0] == '.':
             conn.send('Quiting... \n')
             break
 
         else:
-            #TODO: Define invalid operations protocols.
+            print 'FOP 300 - Invalid Operation'
             conn.send('Invalid operation\n')
             continue
 

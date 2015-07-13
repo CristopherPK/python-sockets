@@ -1,13 +1,11 @@
-'''
-Created on Jun 4, 2015
+__author__ = 'cristopher'
 
-@author: cristopher
-'''
-from bank.client import Client, Account
-from bank.persistence import Persistence
+class ServerManager(object):
+    def __init__(self):
+        '''
 
-class Manager(object):
-
+        :return:
+        '''
     def __init__(self):
         self._persistence = Persistence()
         self._clients = list()
@@ -41,14 +39,14 @@ class Manager(object):
                 else:
                     print 'FOP 200 - Unauthorized'
                     return None
-            
+
     def lookForClientByID(self, id):
         if self.auth():
             for c in self._clients:
                 if c.id == id:
+                    #TODO: If the client does not exist?
                     print 'FOP 100 - OK'
                     return c
-            return None
 
 
     def lookForClientByName(self, name):
@@ -57,7 +55,6 @@ class Manager(object):
                 if c.name == name:
                     print 'FOP 100 - OK'
                     return c
-            return None
 
 
     def removeClient(self, name):
@@ -84,3 +81,4 @@ class Manager(object):
 
     def load(self):
         self._clients = self._persistence.load()
+

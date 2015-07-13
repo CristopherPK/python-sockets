@@ -79,26 +79,36 @@ class Client(object):
                 'id': self.id}
 
     def withdraw(self, value):
-        if self.balance <= 0:
-            return 'Funds insufficient'
-            self._account.setBalance(0)
-
-        self._account.setBalance(self.balance - value)
-        t = Transaction(datetime.now().time(), value, self._account.id, None, "withdraw")
-        self._account.newTransaction(t)
-        return value
+        if self.balance - value < 0:
+            print 'FOP 101 - Funds insufficient'
+            return 0
+        else:
+            self._account.setBalance(self.balance - value)
+            t = Transaction(datetime.now().time(), value, self._account.id, None, "withdraw")
+            self._account.newTransaction(t)
+            print 'FOP 200 - OK'
+            return value
         
     def deposit(self, value):
         self._account.setBalance(self.balance + value)
         t = Transaction(datetime.now().time(), value, None, self._account.id, "deposit")
         self._account.newTransaction(t)
-        
+        print 'FOP 200 - OK'
+        return 'Done'
+
     def transfer(self, dst, value):
-        self._account.setBalance(self.balance - value)
-        dst._account.setBalance(dst.balance + value)
-        t = Transaction(datetime.now().time(), value, self._account.id, dst.id, "transfer")
-        self._account.newTransaction(t)
-        dst._account.newTransaction(t)
+        if dst is not None:
+            self._account.setBalance(self.balance - value)
+            dst._account.setBalance(dst.balance + value)
+            t = Transaction(datetime.now().time(), value, self._account.id, dst.id, "transfer")
+            self._account.newTransaction(t)
+            dst._account.newTransaction(t)
+            print 'FOP 200 - OK'
+            return 'Done'
+        else:
+            print 'FOP 201 - Account no existing'
+            return 'Account no existing'
+
 
     def genReport(self):
         report = list()
