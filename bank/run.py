@@ -44,6 +44,8 @@ def clientThread(conn):
         #Receiving from client
         data = conn.recv(1024)
 
+        print repr(data)
+
         if not data or data[0] is '.':
             print 'Closing connection'
             conn.send('Quiting...\n')
@@ -51,10 +53,10 @@ def clientThread(conn):
             break
 
         id = int(data[:4])
-        print id
+        #print id
         password = str(data[5:len(data)-1])
-        print password
-        print len(password)
+        #print password
+        #print len(password)
         password = password[:len(password)-1]
 
         #Getting client by ID
@@ -80,7 +82,7 @@ def clientThread(conn):
 
         data = conn.recv(1024)
 
-        if 'PUT' == data[0:3]:
+        if 'PUT ' == data[0:4]:
             id = int(data[4:8])
             value = int(data[9:])
             if client.id == id:
@@ -88,7 +90,7 @@ def clientThread(conn):
             else:
                 conn.send(client.transfer(manager.lookForClientByID(id), value) + '\n')
 
-        elif 'TAKE' in data[0:4]:
+        elif 'TAKE ' in data[0:5]:
             value = int(data[5:])
             v = client.withdraw(value)
             conn.send(str(v) + '\n')

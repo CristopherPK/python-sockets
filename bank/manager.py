@@ -76,7 +76,9 @@ class Manager(object):
                 print c.toDict()
 
     def genReport(self):
-        #TODO: Implement the reports.
+        reports = list()
+        for c in clients:
+            reports.append(c.genReport())
         print "ok"
 
     def save(self):
