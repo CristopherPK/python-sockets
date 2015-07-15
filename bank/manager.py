@@ -3,8 +3,8 @@ Created on Jun 4, 2015
 
 @author: cristopher
 '''
-from bank.client import Client, Account
-from bank.persistence import Persistence
+from client import Client, Account
+from persistence import Persistence
 
 class Manager(object):
 

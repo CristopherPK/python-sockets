@@ -9,7 +9,7 @@ Created on Jun 3, 2015
 import socket
 import sys
 from thread import *
-from bank.manager import Manager
+from manager import Manager
 
 HOST = 'localhost'
 PORT = 8888

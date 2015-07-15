@@ -3,9 +3,8 @@ Created on Jun 4, 2015
 
 @author: cristopher
 '''
-from bank.client import Client, Account
-from wallet.persistence import Persistence
-from wallet.user import User
+from persistence import Persistence
+from user import User
 
 
 class Manager(object):

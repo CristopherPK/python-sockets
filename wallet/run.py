@@ -7,12 +7,11 @@ Created on Jun 3, 2015
 '''
 
 # Echo client program
-from ibus.keysyms import key
 import socket
-from wallet.manager import Manager
+from manager import Manager
 
-HOST = 'localhost'     # The remote host
-PORT = 8888            # The same port as used by the server
+HOST = raw_input('Insert the host address: ')     # The remote host
+PORT = input('Insert the host port: ')            # The same port as used by the server
 s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 
 def start():
