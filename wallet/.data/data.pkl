@@ -27,11 +27,12 @@ p12
 sS'_id'
 p13
 I1234
-sbsg11
-S'12345'
+sbsS'_password'
 p14
-sS'_name'
+S'12345'
 p15
-S'Freddie'
+sS'_name'
 p16
+S'Freddie'
+p17
 sb.

@@ -86,14 +86,14 @@ class Client(object):
             self._account.setBalance(self.balance - value)
             t = Transaction(datetime.now().time(), value, self._account.id, None, "withdraw")
             self._account.newTransaction(t)
-            print 'FOP 200 - OK'
+            print 'FOP 100 - OK'
             return value
         
     def deposit(self, value):
         self._account.setBalance(self.balance + value)
         t = Transaction(datetime.now().time(), value, None, self._account.id, "deposit")
         self._account.newTransaction(t)
-        print 'FOP 200 - OK'
+        print 'FOP 100 - OK'
         return 'Done'
 
     def transfer(self, dst, value):
@@ -103,7 +103,7 @@ class Client(object):
             t = Transaction(datetime.now().time(), value, self._account.id, dst.id, "transfer")
             self._account.newTransaction(t)
             dst._account.newTransaction(t)
-            print 'FOP 200 - OK'
+            print 'FOP 100 - OK'
             return 'Done'
         else:
             print 'FOP 201 - Account no existing'

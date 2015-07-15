@@ -21,17 +21,13 @@ class Manager(object):
             print 'FOP 200 - Unauthorized'
             return 0
 
-
-    #TODO: Who have auth to create accounts?
     def createAccount(self, id, name, password):
         account = Account(id)
         client = Client(name, account, password)
         self._clients.append(client)
         return client
 
-    #TODO: Admin and clients shouldn't have the same functions.
     def connectAccount(self, id, password):
-        #TODO: If the list is too large?
         for c in self._clients:
             if c.id == id:
                 if c.password == password:
