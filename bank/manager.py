@@ -80,5 +80,9 @@ class Manager(object):
     def save(self):
         self._persistence.save(self._clients)
 
+    def refresh(self):
+        self._persistence = Persistence()
+        self._clients = self._persistence.load()
+
     def load(self):
         self._clients = self._persistence.load()

@@ -14,9 +14,10 @@ from wallet.manager import Manager
 HOST = 'localhost'     # The remote host
 PORT = 8888            # The same port as used by the server
 s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-manager = Manager()
 
 def start():
+    manager = Manager()
+
     s.connect((HOST, PORT))
     #Receiving the first message from server.
     s.recv(1024)
@@ -69,7 +70,10 @@ def start():
             print 'Invalid operation'
             continue
 
+    #User manager saving data.
     manager.save()
+
+
 
 def balance(bank):
     s.send(bank.balance())

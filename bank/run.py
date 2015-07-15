@@ -8,7 +8,6 @@ manager = Manager()
 
 def start():
 
-    #TODO: If load has nothing?
     manager.load()
 
     print "------------------\n" \
@@ -30,7 +29,6 @@ def start():
 def clientUI():
     id = input('Insert your bank id: ')
     password = raw_input('Insert your bank password: ')
-    client = manager.connectAccount(id, password)
 
     while True:
         print "------------------\n" \
@@ -43,28 +41,32 @@ def clientUI():
 
         x = int(input("Please enter an option: "))
 
+        manager.refresh()
+        client = manager.connectAccount(id, password)
+
         if x == 1:
             print client.balance
 
         elif x == 2:
             value = input('Insert the value: ')
             client.deposit(int(value))
+            manager.save()
         elif x == 3:
             value = input('Insert the value: ')
             client.withdraw(int(value))
+            manager.save()
         elif x == 4:
             dst_id = input('Insert the destination account id: ')
             dst = manager.lookForClientByID(dst_id)
             value = input('Insert the value: ')
             client.transfer(dst, value)
+            manager.save()
         elif x == 0:
             print 'Finishing...'
             break
         else:
             print 'Invalid operation'
             continue
-
-    manager.save()
 
 def managerUI():
     id = input('Insert your bank id: ')
@@ -82,6 +84,9 @@ def managerUI():
 
         x = int(input("Please enter an option: "))
 
+        manager.refresh()
+        client = manager.connectAccount(id, password)
+
         if x == 1:
             id = int(raw_input("Please enter an ID: "))
             name = str(raw_input("Please enter a name: "))
@@ -97,8 +102,12 @@ def managerUI():
             manager.save()
         elif x == 4:
             manager.genReport()
-        else:
+        elif x == 0:
+            print 'Finishing...'
             break
+        else:
+            print 'Invalid operation'
+            continue
 
 if __name__ == '__main__':
     start()

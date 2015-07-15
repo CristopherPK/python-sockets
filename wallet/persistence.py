@@ -16,6 +16,7 @@ class Persistence(object):
     def save(self, obj):
         self._output = open(datapath + 'data.pkl', 'wa')
         self._pickler = pkl.Pickler(self._output)
+        print 'Dumping object'
         self._pickler.dump(obj)
 
     def load(self):

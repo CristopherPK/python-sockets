@@ -17,12 +17,6 @@ PORT = 8888
 s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 print 'Socket created.'
 
-manager = Manager()
-#TODO: Restricting unauthorized access.
-manager.load()
-manager.listClients()
-print 'Bank connected.'
-
 
 #Bind socket to local host and port
 try:
@@ -33,10 +27,20 @@ except socket.error as msg:
 
 print 'Socket bind complete'
 
+def refresh(id, password):
+    manager = Manager()
+    manager.load()
+    manager.connectAccount(id,password)
+    return manager
+
 #Function for handling connections. This will be used to create threads
 def clientThread(conn):
     #Sending message to connected client
     conn.send('Welcome to the bank server. Type your account ID and your password\n') #send only takes string
+
+    manager = Manager()
+    #manager.listClients()
+    print 'Bank connected.'
 
     #infinite loop so that function do not terminate and thread do not end.
     while True:
@@ -60,6 +64,7 @@ def clientThread(conn):
         password = password[:len(password)-1]
 
         #Getting client by ID
+        manager.load()
         client = manager.connectAccount(id,password)
 
         print client
@@ -82,17 +87,27 @@ def clientThread(conn):
 
         data = conn.recv(1024)
 
+        manager.refresh()
+        client = manager.connectAccount(id, password)
+
+
         if 'PUT ' == data[0:4]:
-            id = int(data[4:8])
+            dst_id = int(data[4:8])
             value = int(data[9:])
-            if client.id == id:
-                conn.send(client.deposit(value) + '\n')
+            if client.id == dst_id:
+                data = client.deposit(value)
+                manager.save()
+                conn.send(data  + '\n')
             else:
-                conn.send(client.transfer(manager.lookForClientByID(id), value) + '\n')
+                data = client.transfer(manager.lookForClientByID(dst_id), value)
+                manager.save()
+                conn.send(data + '\n')
+
 
         elif 'TAKE ' in data[0:5]:
             value = int(data[5:])
             v = client.withdraw(value)
+            manager.save()
             conn.send(str(v) + '\n')
 
         elif 'CHECK' in data:
@@ -107,8 +122,10 @@ def clientThread(conn):
             conn.send('Invalid operation\n')
             continue
 
+        #manager = refresh(id, password)
+        #print 'Refreshing server...'
+
     #came out of loop
-    manager.save()
     conn.close()
 
 #Start listening on socket
