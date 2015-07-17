@@ -22,10 +22,11 @@ class Manager(object):
             return 0
 
     def createAccount(self, id, name, password):
-        account = Account(id)
-        client = Client(name, account, password)
-        self._clients.append(client)
-        return client
+        if self.auth():
+            account = Account(id)
+            client = Client(name, account, password)
+            self._clients.append(client)
+            return client
 
     def connectAccount(self, id, password):
         for c in self._clients:
@@ -72,10 +73,11 @@ class Manager(object):
                 print c.toDict()
 
     def genReport(self):
-        reports = list()
-        for c in clients:
-            reports.append(c.genReport())
-        print "ok"
+        if self.auth():
+            reports = list()
+            for c in self._clients:
+                reports.append(c.genReport())
+            return reports
 
     def save(self):
         self._persistence.save(self._clients)

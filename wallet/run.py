@@ -36,7 +36,7 @@ def start():
 
     bank = manager.user.bank
     s.send(bank.connectBank())
-    s.recv(1024)
+    data = s.recv(1024)
 
     while True:
         print "------------------\n" \
