@@ -12,8 +12,8 @@ from thread import *
 from manager import Manager
 
 HOST = 'localhost'
-PORT = 8888
- 
+PORT = input('Insert your server address port: ')
+
 s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 print 'Socket created.'
 

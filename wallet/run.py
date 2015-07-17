@@ -12,6 +12,7 @@ from manager import Manager
 
 HOST = raw_input('Insert the host address: ')     # The remote host
 PORT = input('Insert the host port: ')            # The same port as used by the server
+
 s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 
 def start():
