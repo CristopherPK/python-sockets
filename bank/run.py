@@ -99,8 +99,8 @@ def managerUI():
                 name = str(raw_input("Please enter a name: "))
                 password = str(raw_input("Please enter a password: "))
                 c = manager.createAccount(id, name, password)
-                print "Account created."
                 manager.save()
+                print "Account created."
         elif x == 2:
             manager.listClients()
         elif x == 3:

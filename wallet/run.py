@@ -27,11 +27,11 @@ def start():
         pass
 
     if manager.user is None:
-        username = input('Insert your username: ')
-        password = input('Insert your password: ')
+        username = raw_input('Insert your username: ')
+        password = raw_input('Insert your password: ')
         manager.createUser(username, password)
         id = input('Insert your bank id: ')
-        bank_pass = input('Insert your bank password: ')
+        bank_pass = raw_input('Insert your bank password: ')
         manager.user.addBank(int(id), str(bank_pass))
 
     bank = manager.user.bank

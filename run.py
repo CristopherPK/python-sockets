@@ -3,9 +3,6 @@ Created on Jun 4, 2015
 
 @author: cristopher
 '''
-from bank.client import Transaction, Account
-from datetime import datetime
-
 from bank.manager import Manager
 
 manager = Manager()

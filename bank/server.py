@@ -43,6 +43,8 @@ def clientThread(conn):
 
     #infinite loop so that function do not terminate and thread do not end.
     while True:
+        manager.load()
+
         #Listen to the operations from the user
         #Receiving from client
         data = conn.recv(1024)
@@ -63,7 +65,6 @@ def clientThread(conn):
         password = password[:len(password)-1]
 
         #Getting client by ID
-        manager.load()
         client = manager.connectAccount(id,password)
         print 'Bank connected.'
 

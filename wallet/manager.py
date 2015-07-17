@@ -24,4 +24,7 @@ class Manager(object):
         self._persistence.save(self._user)
 
     def load(self):
-        self._user = self._persistence.load()
+        try:
+            self._user = self._persistence.load()
+        except:
+            print 'No user existing.'

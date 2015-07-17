@@ -84,7 +84,19 @@ class Manager(object):
 
     def refresh(self):
         self._persistence = Persistence()
-        self._clients = self._persistence.load()
+        self.load()
 
     def load(self):
-        self._clients = self._persistence.load()
+        try:
+            self._clients = self._persistence.load()
+        except:
+            print 'No clients existing.'
+            print 'Please define a starting account.'
+            id = int(raw_input("Please enter an ID: "))
+            name = str(raw_input("Please enter a name: "))
+            password = str(raw_input("Please enter a password: "))
+            account = Account(id)
+            client = Client(name, account, password)
+            self._clients.append(client)
+            self.save()
+            print "Account created."

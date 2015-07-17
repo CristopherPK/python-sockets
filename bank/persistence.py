@@ -14,7 +14,7 @@ class Persistence(object):
         self._output = []
 
     def save(self, obj):
-        self._output = open('./data/data.pkl', 'wa')
+        self._output = open('.data/data.pkl', 'w+')
         self._pickler = pkl.Pickler(self._output)
         self._pickler.dump(obj)
         self._output.close()
